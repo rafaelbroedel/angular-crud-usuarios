@@ -1,5 +1,5 @@
 <div class="d-flex h-100 align-items-center justify-content-center">
-    <form>
+    <form [formGroup]="formulario" (ngSubmit)="acessar()">
         <div class="card" style="min-width: 300px;">
             <div class="card-header">
                 Acesso ao Sistema
@@ -7,16 +7,20 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="login-email-input">E-mail</label>
-                    <input type="email" class="form-control" id="login-email-input" required>
+                    <input type="email" formControlName="Email" class="form-control" id="login-email-input" [ngClass]="{ 'is-invalid': formulario.dirty && formulario.controls.Email.errors }" >
+                    <div *ngIf="formulario.dirty && formulario.controls.Email.errors" class="invalid-feedback">
+                        <div *ngIf="formulario.controls.Email.errors.required">Campo obrigatório</div>
+                        <div *ngIf="formulario.controls.Email.errors.email">E-mail inválido</div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="login-senha-input">Senha</label>
-                    <input type="password" class="form-control" id="login-senha-input">
+                    <input type="password" formControlName="Senha" class="form-control" id="login-senha-input">
                 </div>
             </div>
             <div class="card-footer text-right">
                 <a href="#" class="btn btn-outline-second mx-3">Cadastrar</a>
-                <button type="submit" class="btn btn-primary">Acessar</button>
+                <button type="submit" [disabled]="formulario.invalid" class="btn btn-primary">Acessar</button>
             </div>
         </div>
     </form>
